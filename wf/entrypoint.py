@@ -7,8 +7,11 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 from typing import List, Optional
-
+import boto3
+from botocore import UNSIGNED
+import re
 import requests
+
 from latch.executions import rename_current_execution, report_nextflow_used_storage
 from latch.ldata.path import LPath
 from latch.resources.tasks import custom_task, nextflow_runtime_task
@@ -185,11 +188,21 @@ def nextflow_runtime(
     )
 
     if genome_source == "latch_genome_source":
-        fasta = os.path.join(
-            "s3://latch-public/nf-core/atacseq/",
-            latch_genome.name,
-            latch_genome.name + ".fa",
-        )
+        bucket = "latch-public"
+        prefix = f"nf-core/atacseq/{latch_genome.name}/"
+        regex = re.compile(rf"{latch_genome.name}\.(fa|fna|fasta)(\.gz)?$")
+
+        s3 = boto3.client("s3", config=boto3.session.Config(signature_version=UNSIGNED))
+
+        fasta = None
+        resp = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
+
+        for obj in resp.get("Contents", []):
+            key = obj["Key"]
+            if regex.search(key):
+                fasta = f"s3://{bucket}/{key}"
+                break
+
         gtf = os.path.join(
             "s3://latch-public/nf-core/atacseq/",
             latch_genome.name,
@@ -203,6 +216,7 @@ def nextflow_runtime(
         #     bwa_index = os.path.join(
         #         "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bwa"
         #     )
+
         elif aligner.name == "star":
             star_index = os.path.join(
                 "s3://latch-public/nf-core/atacseq/", latch_genome.name, "star"
