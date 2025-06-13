@@ -77,11 +77,11 @@ def initialize(run_name: str) -> str:
 
     print("Provisioning shared storage volume... ", end="")
     resp = requests.post(
-        "http://nf-dispatcher-service.flyte.svc.cluster.local/provision-storage",
+        "http://nf-dispatcher-service.flyte.svc.cluster.local/provision-storage-ofs",
         headers=headers,
         json={
-            "storage_expiration_hours": 0,
             "version": 2,
+            "fs_size_tb": 50,
         },
     )
     resp.raise_for_status()
@@ -212,10 +212,10 @@ def nextflow_runtime(
             bowtie2_index = os.path.join(
                 "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bowtie2"
             )
-        # elif aligner.name == "bwa":
-        #     bwa_index = os.path.join(
-        #         "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bwa"
-        #     )
+        elif aligner.name == "bwa":
+            bwa_index = os.path.join(
+                "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bwa"
+            )
 
         elif aligner.name == "star":
             star_index = os.path.join(

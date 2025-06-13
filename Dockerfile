@@ -1,5 +1,5 @@
 # DO NOT CHANGE
-from 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base-nextflow:v2.0.0
+from 812206152185.dkr.ecr.us-west-2.amazonaws.com/latch-base-nextflow:v2.3.4
 
 workdir /tmp/docker-build/work/
 
@@ -33,9 +33,11 @@ libncurses5-dev libncursesw5-dev liblzma-dev libtool autoconf build-essential pk
 
 RUN pip install numpy pandas pyarrow pyBigWig
 
-RUN wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh && \
-    bash Mambaforge-Linux-x86_64.sh -b -p /mambaforge && \
-    rm Mambaforge-Linux-x86_64.sh
+RUN curl -L -o miniforge.sh \
+        https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh \
+    && bash miniforge.sh -b -p /mambaforge \
+    && rm miniforge.sh
+    
 ENV PATH="/mambaforge/bin:$PATH"
 
 #Install ATCseqQC
