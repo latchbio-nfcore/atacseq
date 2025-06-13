@@ -199,10 +199,10 @@ def nextflow_runtime(
             bowtie2_index = os.path.join(
                 "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bowtie2"
             )
-        elif aligner.name == "bwa":
-            bwa_index = os.path.join(
-                "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bwa"
-            )
+        # elif aligner.name == "bwa":
+        #     bwa_index = os.path.join(
+        #         "s3://latch-public/nf-core/atacseq/", latch_genome.name, "bwa"
+        #     )
         elif aligner.name == "star":
             star_index = os.path.join(
                 "s3://latch-public/nf-core/atacseq/", latch_genome.name, "star"
