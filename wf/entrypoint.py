@@ -67,6 +67,9 @@ class ReadLength(Enum):
 
 @custom_task(cpu=0.25, memory=0.5, storage_gib=1)
 def initialize(run_name: str) -> str:
+    if os.environ.get("LATCH_NF_DEBUG") is not None:
+        return ""
+
     rename_current_execution(str(run_name))
 
     token = os.environ.get("FLYTE_INTERNAL_EXECUTION_ID")
@@ -310,7 +313,7 @@ def nextflow_runtime(
             **os.environ,
             "NXF_ANSI_LOG": "false",
             "NXF_HOME": "/root/.nextflow",
-            "NXF_OPTS": "-Xms1536M -Xmx6144M -XX:ActiveProcessorCount=4",
+            "NXF_OPTS": "-Xms1536M -Xmx6144M -XX:ActiveProcessorCount=90",
             "NXF_DISABLE_CHECK_LATEST": "true",
             "NXF_ENABLE_VIRTUAL_THREADS": "false",
         }
