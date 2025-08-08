@@ -25,8 +25,8 @@ jobs:
       - name: Setup Latch and register
         uses: fulcrumgenomics/setup-latch@v2
         with:
-          workspace: ${{ secrets.LATCH_WORKSPACE }}
-          token:     ${{ secrets.LATCH_TOKEN }}
+          latch-workspace: ${{ secrets.LATCH_WORKSPACE }}
+          latch-token:     ${{ secrets.LATCH_TOKEN }}
           register:  true
           # mark-as-release: true  # optional to mark this as a release
 
