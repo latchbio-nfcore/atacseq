@@ -313,7 +313,7 @@ def nextflow_runtime(
             **os.environ,
             "NXF_ANSI_LOG": "false",
             "NXF_HOME": "/root/.nextflow",
-            "NXF_OPTS": "-Xms1536M -Xmx6144M -XX:ActiveProcessorCount=90",
+            "NXF_OPTS": "-Xms1536M -Xmx6144M -XX:ActiveProcessorCount=12",
             "NXF_DISABLE_CHECK_LATEST": "true",
             "NXF_ENABLE_VIRTUAL_THREADS": "false",
         }
