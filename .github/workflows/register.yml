@@ -29,6 +29,11 @@ jobs:
           ssh -V
           which ssh-keygen
 
+      # - name: Reset Latch temp key
+      #   run: |
+      #     rm -rf .latch
+      #     mkdir -p .latch
+
       - name: Setup Latch and register
         uses: fulcrumgenomics/setup-latch@v2
         with:
