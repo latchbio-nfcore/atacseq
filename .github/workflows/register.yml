@@ -1,0 +1,34 @@
+name: Register nfcore-test on commit
+
+on:
+  push:
+    branches: 
+        - '**'
+    # Optional: limit to certain paths so it only runs if Nextflow code changes
+    # paths:
+    #   - '**.nf'
+    #   - 'conf/**'
+    #   - 'modules/**'
+    #   - 'Dockerfile'
+
+jobs:
+  register:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Setup Latch and register
+        uses: fulcrumgenomics/setup-latch@v2
+        with:
+          workspace: ${{ secrets.LATCH_WORKSPACE }}
+          token:     ${{ secrets.LATCH_TOKEN }}
+          register:  true
+          # mark-as-release: true  # optional to mark this as a release
+
+      - name: Show Latch CLI version
+        run: latch --version
