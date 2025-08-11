@@ -73,7 +73,7 @@ generated_parameters = {
     ),
     "read_length": NextflowParameter(
         type=typing.Optional[int],
-        appearance_type=Multiselect([50, 75, 100, 150, 200], allow_custom=True),
+        appearance_type=Multiselect([50, 75, 100, 150, 200], allow_custom=False),
         default=50,
         section_title=None,
         display_name="Read Length",

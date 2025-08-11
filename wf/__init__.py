@@ -103,6 +103,8 @@ def nf_nf_core_atacseq(
 
     ## Pipeline summary
 
+    Version-V1-Test
+
     1. Raw read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
     2. Adapter trimming ([`Trim Galore!`](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/))
     3. Choice of multiple aligners
